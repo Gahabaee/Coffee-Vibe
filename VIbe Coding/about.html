@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Vibe | About</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav>
+    <a href="index.html" class="logo">COFFEE VIBE</a>
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="about.html">About</a>
+        <a href="cart.html">Cart</a>
+    </div>
+</nav>
+
+<main class="container">
+    <h1 style="text-align: center; margin-bottom: 3rem;">THE ART OF <span class="text-accent">ROASTING</span></h1>
+    
+    <div style="display: flex; gap: 3rem; align-items: center; flex-wrap: wrap;">
+        <div style="flex: 1; min-width: 300px;">
+            <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=800&q=80" style="width: 100%; border-radius: 5px; border: 1px solid rgba(212, 175, 55, 0.3);">
+        </div>
+        <div style="flex: 1; min-width: 300px;">
+            <h2 class="text-accent" style="margin-bottom: 1rem;">CERITA KAMI</h2>
+            <p style="line-height: 1.8; color: #ccc; margin-bottom: 1rem;">
+                Di Coffee Vibe, kami percaya bahwa secangkir kopi adalah sebuah mahakarya. Biji kopi kami dipanen dengan tangan dari perkebunan terbaik di dataran tinggi, lalu dipanggang dengan presisi untuk mengeluarkan aroma dan rasa yang unik.
+            </p>
+            <h3 style="margin: 2rem 0 1rem 0;">NILAI KAMI</h3>
+            <ul style="list-style: none; color: #ccc; line-height: 2;">
+                <li>✓ 100% Biji Kopi Arabika Premium</li>
+                <li>✓ Fair Trade & Ramah Lingkungan</li>
+                <li>✓ Dipanggang setiap hari (Freshly Roasted)</li>
+            </ul>
+        </div>
+    </div>
+</main>
+
+<!-- AI Bot Widget -->
+<div class="ai-bot-container">
+    <button class="ai-toggle" id="aiToggle" onclick="toggleChat()">☕</button>
+    <div class="ai-window" id="aiWindow">
+        <div class="ai-header">
+            <h3>AI Barista</h3>
+            <span style="cursor:pointer;" onclick="toggleChat()">✕</span>
+        </div>
+        <div class="ai-messages" id="chatMessages">
+            <div class="msg bot">
+                Halo! ✨ Selamat datang di Coffee Vibe. Ada yang bisa saya bantu hari ini?
+                <br>
+                <button class="quick-action-btn" onclick="sendQuickMessage('Rekomendasikan kopi')">Rekomendasikan Kopi</button>
+                <button class="quick-action-btn" onclick="sendQuickMessage('Cek pesanan saya')">Cek Pesanan</button>
+            </div>
+        </div>
+        <div class="ai-input">
+            <input type="text" id="userInput" placeholder="Ketik pesan..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()">➤</button>
+        </div>
+    </div>
+</div>
+
+<footer style="text-align: center; padding: 2rem; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 4rem; color: #666;">
+    <p>&copy; 2026 Coffee Vibe. Crafted with passion.</p>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>

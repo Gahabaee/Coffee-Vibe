@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Vibe | Premium Roastery</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav>
+    <a href="index.html" class="logo">COFFEE VIBE</a>
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="about.html">About</a>
+        <a href="cart.html">Cart</a>
+    </div>
+</nav>
+
+<header class="hero">
+    <h1>CRAFTED FOR THE <span class="text-accent">CURIOUS.</span></h1>
+    <p style="margin-bottom: 2rem; font-size: 1.2rem; max-width: 600px;">Sebuah perjalanan rasa di setiap cangkir. Biji kopi premium dipanggang sempurna setiap hari.</p>
+    <a href="shop.html" class="btn btn-primary">Discover Our Menu</a>
+</header>
+
+<main class="container">
+    <h2 style="text-align: center; margin-bottom: 1rem;">CURATED FOR YOU</h2>
+    <p style="text-align: center; color: #888;">Produk signature terlaris kami minggu ini.</p>
+    
+    <div class="product-grid">
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1559525839-b184a4d698c7?auto=format&fit=crop&w=300&q=80" class="product-image" alt="Signature Blend">
+            <h3>Signature Blend</h3>
+            <p class="product-price">Rp 85.000</p>
+            <a href="javascript:void(0)" onclick="addToCart('prod1', 'Signature Blend', 85000, 'https://images.unsplash.com/photo-1559525839-b184a4d698c7?w=50')" class="btn" style="padding: 0.5rem 1rem; font-size: 0.8rem;">Add to Cart</a>
+        </div>
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=300&q=80" class="product-image" alt="Vanilla Latte">
+            <h3>Vanilla Latte</h3>
+            <p class="product-price">Rp 45.000</p>
+            <a href="javascript:void(0)" onclick="addToCart('prod2', 'Vanilla Latte', 45000, 'https://images.unsplash.com/photo-1541167760496-1628856ab772?w=50')" class="btn" style="padding: 0.5rem 1rem; font-size: 0.8rem;">Add to Cart</a>
+        </div>
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=300&q=80" class="product-image" alt="Cold Brew Maker">
+            <h3>Cold Brew Maker</h3>
+            <p class="product-price">Rp 150.000</p>
+            <a href="javascript:void(0)" onclick="addToCart('prod3', 'Cold Brew Maker', 150000, 'https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=50')" class="btn" style="padding: 0.5rem 1rem; font-size: 0.8rem;">Add to Cart</a>
+        </div>
+    </div>
+</main>
+
+<section style="background: #0a0a0a; padding: 5rem 2rem; text-align: center; margin-top: 2rem;">
+    <h2 style="font-style: italic; color: #d4af37; max-width: 800px; margin: 0 auto; line-height: 1.6;">
+        "Kami tidak hanya menyeduh kopi. Kami menyeduh pengalaman, merayakan setiap profil rasa yang tersembunyi di balik biji kopi terbaik."
+    </h2>
+    <br><br>
+    <a href="about.html" class="btn">Baca Cerita Kami</a>
+</section>
+
+<!-- AI Bot Widget -->
+<div class="ai-bot-container">
+    <button class="ai-toggle" id="aiToggle" onclick="toggleChat()">☕</button>
+    <div class="ai-window" id="aiWindow">
+        <div class="ai-header">
+            <h3>AI Barista</h3>
+            <span style="cursor:pointer;" onclick="toggleChat()">✕</span>
+        </div>
+        <div class="ai-messages" id="chatMessages">
+            <div class="msg bot">
+                Halo! ✨ Selamat datang di Coffee Vibe. Ada yang bisa saya bantu hari ini?
+                <br>
+                <button class="quick-action-btn" onclick="sendQuickMessage('Rekomendasikan kopi')">Rekomendasikan Kopi</button>
+                <button class="quick-action-btn" onclick="sendQuickMessage('Cek pesanan saya')">Cek Pesanan</button>
+            </div>
+        </div>
+        <div class="ai-input">
+            <input type="text" id="userInput" placeholder="Ketik pesan..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()">➤</button>
+        </div>
+    </div>
+</div>
+
+<footer style="text-align: center; padding: 2rem; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 4rem; color: #666;">
+    <p>&copy; 2026 Coffee Vibe. Crafted with passion.</p>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>

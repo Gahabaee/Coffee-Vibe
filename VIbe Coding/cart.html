@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Vibe | Cart</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav>
+    <a href="index.html" class="logo">COFFEE VIBE</a>
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="about.html">About</a>
+        <a href="cart.html">Cart</a>
+    </div>
+</nav>
+
+<main class="container">
+    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem;">
+        
+        <div>
+            <h2>KERANJANG <span class="text-accent">BELANJA</span></h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Produk</th>
+                        <th>Harga</th>
+                        <th>Qty</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="cart-body">
+                    <!-- Dynamic Cart Data will be injected here -->
+                </tbody>
+            </table>
+            
+            <div style="margin-top: 2rem; text-align: right;">
+                <h3>Total: <span class="text-accent" id="cart-total">Rp 85.000</span></h3>
+                <button class="btn btn-primary" style="margin-top: 1rem;" onclick="checkout()">Checkout Sekarang</button>
+            </div>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.02); padding: 2rem; border: 1px solid rgba(212,175,55,0.2);">
+            <h3 class="text-accent" style="margin-bottom: 1rem;">LACAK PESANAN</h3>
+            <p style="font-size: 0.9rem; margin-bottom: 1rem; color: #888;">Masukkan Nomor Resi / Order ID yang diberikan oleh AI Bot.</p>
+            <input type="text" id="trackId" placeholder="Contoh: TRXD-1234" style="width: 100%; padding: 10px; background: #000; border: 1px solid #333; color: white; margin-bottom: 1rem;">
+            <button class="btn" style="width: 100%; padding: 10px;" onclick="trackOrder()">Cek Status</button>
+            <div id="trackResult" style="margin-top: 1rem; font-size: 0.9rem; color: #d4af37;"></div>
+        </div>
+    </div>
+</main>
+
+<script>
+function renderCart() {
+    const cart = getCart();
+    const tbody = document.getElementById('cart-body');
+    let html = '';
+    let total = 0;
+
+    if(cart.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Keranjang Anda Kosong.</td></tr>';
+        document.getElementById('cart-total').innerText = 'Rp 0';
+        return;
+    }
+
+    cart.forEach(item => {
+        const subtotal = item.price * item.qty;
+        total += subtotal;
+        html += `
+        <tr id="cart-item-${item.id}" style="transition: all 0.3s ease;">
+            <td>
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <img src="${item.img}" style="width:50px; height:50px; object-fit:cover; border-radius:5px;">
+                    ${item.name}
+                </div>
+            </td>
+            <td>Rp ${item.price.toLocaleString('id-ID')}</td>
+            <td>
+                <button onclick="updateQty('${item.id}', -1)" style="padding:2px 8px; background:#333; color:white; border:none; border-radius:3px; cursor:pointer;">-</button>
+                <span style="margin: 0 10px;">${item.qty}</span>
+                <button onclick="updateQty('${item.id}', 1)" style="padding:2px 8px; background:#d4af37; color:#000; border:none; border-radius:3px; cursor:pointer;">+</button>
+            </td>
+            <td><a href="javascript:void(0)" onclick="removeItemAnim('${item.id}', ${subtotal})" style="color:#ff4444; text-decoration:none;">Hapus</a></td>
+        </tr>`;
+    });
+
+    tbody.innerHTML = html;
+    document.getElementById('cart-total').innerText = 'Rp ' + total.toLocaleString('id-ID');
+}
+
+function updateQty(id, delta) {
+    let cart = getCart();
+    const item = cart.find(i => i.id === id);
+    if(item) {
+        item.qty += delta;
+        if(item.qty <= 0) {
+            removeItem(id);
+            return;
+        }
+        saveCart(cart);
+        renderCart();
+    }
+}
+
+function removeItem(id) {
+    let cart = getCart();
+    cart = cart.filter(i => i.id !== id);
+    saveCart(cart);
+    renderCart();
+}
+
+function removeItemAnim(id, price) {
+    const item = document.getElementById('cart-item-' + id);
+    if(item) {
+        item.style.opacity = '0';
+        item.style.transform = 'translateX(30px)';
+        setTimeout(() => {
+            removeItem(id);
+        }, 300);
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    // Migrasi data lama jika ada (dari versi statis)
+    if(localStorage.getItem('isCartEmpty') === 'false' && getCart().length === 0) {
+        addToCart('prod1', 'Signature Blend', 85000, 'https://images.unsplash.com/photo-1559525839-b184a4d698c7?w=50');
+    }
+    renderCart();
+});
+
+function checkout() {
+    // Panggil fungsi chat AI
+    if(typeof toggleChat === 'function') {
+        document.getElementById('aiWindow').classList.add('active');
+        sendQuickMessage("Saya mau bayar pesanan di keranjang.");
+    }
+}
+function trackOrder() {
+    let id = document.getElementById('trackId').value;
+    if(id) {
+        document.getElementById('trackResult').innerText = "Mencari data untuk " + id + "...";
+        setTimeout(() => {
+            document.getElementById('trackResult').innerHTML = "Status: <b>Sedang Dipanggang</b> (Menunggu Pengiriman)";
+        }, 1000);
+    }
+}
+</script>
+
+<!-- AI Bot Widget -->
+<div class="ai-bot-container">
+    <button class="ai-toggle" id="aiToggle" onclick="toggleChat()">☕</button>
+    <div class="ai-window" id="aiWindow">
+        <div class="ai-header">
+            <h3>AI Barista</h3>
+            <span style="cursor:pointer;" onclick="toggleChat()">✕</span>
+        </div>
+        <div class="ai-messages" id="chatMessages">
+            <div class="msg bot">
+                Halo! ✨ Selamat datang di Coffee Vibe. Ada yang bisa saya bantu hari ini?
+                <br>
+                <button class="quick-action-btn" onclick="sendQuickMessage('Rekomendasikan kopi')">Rekomendasikan Kopi</button>
+                <button class="quick-action-btn" onclick="sendQuickMessage('Cek pesanan saya')">Cek Pesanan</button>
+            </div>
+        </div>
+        <div class="ai-input">
+            <input type="text" id="userInput" placeholder="Ketik pesan..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()">➤</button>
+        </div>
+    </div>
+</div>
+
+<footer style="text-align: center; padding: 2rem; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 4rem; color: #666;">
+    <p>&copy; 2026 Coffee Vibe. Crafted with passion.</p>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>
